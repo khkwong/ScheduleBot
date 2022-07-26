@@ -12,18 +12,17 @@ const LIVE_URL = "https://live.juliacon.org/"
 
 D = Discorder
 
-function load_color(channel::DiscordChannel)
-    color = channel.name
+function load_channel(room)
     data = open(JSON3.read, joinpath(DATA_DIR, "discord.json"))
-    filtered = filter(x -> x.name == color, data.channels)
-    return filtered[1].color
+    filtered = filter(x -> x.name == room, data.channels)
+    return (filtered[1].color, filtered[1].id)
 end
 
 function send_message(client::BotClient, bot_channels::Vector{DiscordChannel}, talk::JSON3.Object)
     @info "Alerting" now()
     @info talk.slot.room.en
-    channel = filter(x -> x.name == lowercase(talk.slot.room.en), bot_channels)[1]
-    color = load_color(channel)
+    color, id = load_channel(talk.slot.room.en)
+    channel = filter(x -> x.id == id, bot_channels)[1]
     message = format_message(talk, color)
     try
         D.create_message(client, channel; embeds=[message])

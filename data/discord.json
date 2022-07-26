@@ -1,23 +1,33 @@
 {
     "channels": [
       {
-        "name": "red",
+        "name": "BoF",
+        "id": 995757799525056533,
+        "color": 16711935
+      },
+      {
+        "name": "Red",
+        "id": 997765546386915349,
         "color": 13319219
       },
       {
-        "name": "green",
+        "name": "Green",
+        "id": 997765348373831680,
         "color": 3708966
       },
       {
-        "name": "purple",
+        "name": "Purple",
+        "id": 997765662577528852,
         "color": 9787570
       },
       {
-        "name": "blue",
+        "name": "Blue",
+        "id": 997765456905654282,
         "color": 3447003
       },
       {
-        "name": "jump-dev",
+        "name": "JuMP",
+        "id": 997765767053459520,
         "color": 15105570
       }
     ]
