@@ -1,0 +1,24 @@
+{
+    "channels": [
+      {
+        "name": "red",
+        "color": 13319219
+      },
+      {
+        "name": "green",
+        "color": 3708966
+      },
+      {
+        "name": "purple",
+        "color": 9787570
+      },
+      {
+        "name": "blue",
+        "color": 3447003
+      },
+      {
+        "name": "jump-dev",
+        "color": 15105570
+      }
+    ]
+  }

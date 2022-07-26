@@ -1,0 +1,13 @@
+name = "ScheduleBot"
+uuid = "c9468df9-e8eb-47a8-89ed-88e4b1ebb7a8"
+authors = ["Keith Kwong <chubbster7134@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+Discord = "fcbf000d-02fd-53f1-af91-d952191673d3"
+Discorder = "c6a91ba0-1c40-48b6-bd49-67c5ab335442"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
+TimeZones = "f269a46b-ccf7-5d73-abea-4c690281aa53"
