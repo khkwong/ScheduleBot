@@ -95,14 +95,11 @@ function updater(client::BotClient, bot_channels::Vector{DiscordChannel})
 end
 
 function load_talks()
-    current_time = now(localzone())
     talks = open(JSON3.read, joinpath(DATA_DIR, "talks.json"))
     buckets = Dict{ZonedDateTime, Vector{JSON3.Object}}()
     for talk in talks
         start = ZonedDateTime(talk.slot.start, DATETIME_FORMAT)
-        if start > current_time
-            push!(get!(() -> [], buckets, start), talk)
-        end
+        push!(get!(() -> [], buckets, start), talk)
     end
     return sort(collect(buckets); by=first)
 end
