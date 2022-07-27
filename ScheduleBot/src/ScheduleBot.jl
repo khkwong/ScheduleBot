@@ -20,10 +20,10 @@ end
 
 function send_message(client::BotClient, bot_channels::Vector{DiscordChannel}, talk::JSON3.Object)
     @info "Alerting" now() talk.slot.room.en
+    color, id = load_channel(talk.slot.room.en)
+    channel = filter(x -> x.id == id, bot_channels)[1]
+    message = format_message(talk, color)
     try
-        color, id = load_channel(talk.slot.room.en)
-        channel = filter(x -> x.id == id, bot_channels)[1]
-        message = format_message(talk, color)
         D.create_message(client, channel; embeds=[message])
     catch ex
         @warn "Sending message failed" talk.slot.room.en ex
