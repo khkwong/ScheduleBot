@@ -19,15 +19,21 @@ function load_channel(room)
 end
 
 function send_message(client::BotClient, bot_channels::Vector{DiscordChannel}, talk::JSON3.Object)
-    @info "Alerting" now()
-    @info talk.slot.room.en
+    @info "Alerting" now() talk.slot.room.en
     color, id = load_channel(talk.slot.room.en)
     channel = filter(x -> x.id == id, bot_channels)[1]
     message = format_message(talk, color)
     try
         D.create_message(client, channel; embeds=[message])
     catch ex
-        @warn "Sending message failed" exception=(ex, catch_backtrace())
+        @warn "Sending message failed" talk.slot.room.en ex
+        try
+            sleep(0.3)
+            D.create_message(client, channel; embeds=[message])
+            @info "Retry was successful" talk.slot.room.en
+        catch ex2
+            @warn "Retry failed also :-(" talk.slot.room.en ex2
+        end
     end
 end
 
@@ -63,12 +69,13 @@ function updater(client::BotClient, bot_channels::Vector{DiscordChannel})
     try
         while true
             current_time = now(localzone())
-            for (start, talks) in load_talks()
+            all_talks = retry(load_talks; delays=fill(0.2, 3))()
+            for (start, talks) in all_talks
                 wait = start - current_time
                 wait < Millisecond(0) && continue
-                @info "Talks Loaded" current_time start wait length(load_talks())
+                @info "Talks Loaded" current_time start wait length(all_talks)
                 if wait > Millisecond(600000)
-                    @info "Sleeping for 10 seconds"
+                    @info "Sleeping for 60 seconds"
                     sleep(60)
                     break
                 end
@@ -77,7 +84,7 @@ function updater(client::BotClient, bot_channels::Vector{DiscordChannel})
                 for talk in talks
                     @info "Sending message" talk.title
                     send_message(client, bot_channels, talk)
-                    sleep(0.2)
+                    sleep(0.3)
                 end
             end
         end
