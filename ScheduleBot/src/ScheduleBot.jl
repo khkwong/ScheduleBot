@@ -13,7 +13,7 @@ const LIVE_URL = "https://live.juliacon.org/"
 D = Discorder
 
 function load_channel(room)
-    data = open(JSON3.read, joinpath(DATA_DIR, "discord.json"))
+    data = open(JSON3.read, joinpath(DATA_DIR, "test_discord.json"))
     filtered = filter(x -> x.name == room, data.channels)
     return (filtered[1].color, filtered[1].id)
 end
